@@ -188,12 +188,34 @@
 
 ---
 
+## 補足：住宅リフォーム受注件数の推移（2024→2030年度）
+
+![受注件数見通し](charts/04_reform_orders_2025_2030.png)
+
+| 年度 | 住宅の受注件数 | 住宅の受注高 | 区分 |
+|---|---|---|---|
+| 2024 | 住宅分は未取得（全体：約816万件） | 4兆1,318億円（−3.3%） | 実績（国交省） |
+| 2025 | **約747万件**（全体：1,097万件、+34.5%） | **4兆9,033億円（+18.7%）** | 実績（国交省） |
+| 2026 | 約710万件（672〜747万件） | ― | 試算。4〜6月の住宅受注高は前年同期比 −7.6% |
+| 2027 | 約703万件（659〜747万件） | ― | 試算 |
+| 2028 | 約696万件（646〜747万件） | ― | 試算 |
+| 2029 | 約689万件（633〜747万件） | ― | 試算 |
+| 2030 | **約682万件**（620〜747万件） | ― | 試算 |
+
+※試算は「標準（強気〜弱気）」の順。標準は2026年度 −5%、以降は年 −1%（市場 +1.5% − 単価 +2.5%）。強気は横ばい、弱気は2026年度 −10%、以降は年 −2%。
+※2025年度の1件あたりの平均は約66万円（小規模な修繕を含む）。この調査は標本調査のため、件数は年によって±30%ほど振れる。
+
+**読み方：市場規模（金額）が伸びるのは単価の上昇による。件数は横ばい〜微減で、1件あたりの提案価値（客単価・家具の同時購入）で売上を伸ばす必要がある。**
+
+---
+
 ### 出典
 - [矢野経済研究所：住宅リフォーム市場に関する調査（2026年）](https://www.yano.co.jp/press-release/show/press_id/4153)
 - [野村総合研究所：2026〜2040年度の新設住宅着工戸数・リフォーム市場予測](https://www.nri.com/jp/news/newsrelease/20260618_1.html)
 - [新設住宅着工 2025年度 71万1171戸](https://www.kicks-blog.com/entry/2026/05/04/080647)／[ハウジング・トリビューン](https://www.housenews.jp/research/35902)
 - [建設経済研究所 2026年度の見通し（BuildApp News）](https://housing-news.build-app.jp/article/36965/)／[日経：野村総研 2026〜2040年度予測](https://www.nikkei.com/article/DGXZRSP708697_Y6A610C2000000/)
 - [2025年 地域別着工の集計](https://link-estate.kikirara.jp/blogs/2025%E5%B9%B4%E3%81%AE%E5%85%A8%E5%9B%BD%E6%96%B0%E8%A8%AD%E4%BD%8F%E5%AE%85%E7%9D%80%E5%B7%A5%E6%88%B8%E6%95%B0%EF%BC%8F3%E5%B9%B4%E9%80%A3%E7%B6%9A%E6%B8%9B%EF%BC%8F74%E4%B8%87665%E6%88%B8%EF%BC%8F/)／[LIFULL HOME'S：TSMC・ラピダス周辺の賃貸市場](https://www.homes.co.jp/cont/press/report/report_00442/)
+- [国交省 建築物リフォーム・リニューアル調査 2024年度計](https://www.mlit.go.jp/report/press/content/001894226.pdf)／[2025年度 住宅受注高18.7%増（新建ハウジング）](https://www.s-housing.jp/archives/423978)／[2026年度4〜6月 住宅7.6%減](https://www.s-housing.jp/archives/430889)
 - [厚生労働省：2025年 国民生活基礎調査の概況](https://www.mhlw.go.jp/toukei/saikin/hw/k-tyosa/k-tyosa25/dl/14.pdf)／[日本経済新聞](https://www.nikkei.com/article/DGXZQOUA1485P0U6A710C2000000/)
 - [JILPT：2025年の実質賃金 −1.3%（4年連続マイナス）](https://www.jil.go.jp/kokunai/blt/backnumber/2026/04/kokunai_01.html)
 - [住宅リフォーム推進協議会 調査（新建ハウジング）](https://www.s-housing.jp/archives/378713)／[ハウジング・トリビューン](https://htonline.sohjusha.co.jp/20250225-1/)
