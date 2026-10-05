@@ -8,7 +8,7 @@
   /* Instagram 縦型投稿 1080 x 1350px（4:5）。色・書体はLINEリッチメニューと共通 */
   :root {
     --black: #231F1C; --orange: #F39800; --taupe: #7B6A56;
-    --paper: #FFFFFF; --tint: #F4F1ED; --line: #E4DED6; --sub: #6E6357;
+    --paper: #EDE6DC; --tint: #F8F4EF; --line: #E4DED6; --sub: #6E6357;
     --line-green: #06C755;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -72,8 +72,8 @@
   .map { margin-top: 60px; display: grid; place-items: center; }
   .rings { position: relative; width: 760px; height: 760px; }
   .rings div { position: absolute; border-radius: 50%; display: grid; place-items: start center; }
-  .rings .r3 { inset: 0; background: #F7F3EE; }
-  .rings .r2 { inset: 130px; background: #EFE7DD; }
+  .rings .r3 { inset: 0; background: #F8F4EF; }
+  .rings .r2 { inset: 130px; background: #E0D4C4; }
   .rings .r1 { inset: 270px; background: var(--orange); place-items: center; }
   .rings span { font-size: 32px; font-weight: 700; margin-top: 46px; color: var(--taupe); }
   .rings .r1 span { margin: 0; color: var(--black); font-size: 40px; text-align: center; line-height: 1.3; }
@@ -108,6 +108,15 @@
                      background-size: cover; background-position: center 62%; }
   .coord .flow { margin-top: 40px; gap: 16px; }
   .coord .flow div { font-size: 38px; padding: 22px 36px; }
+  /* 表紙：3投稿で同じ型（ベージュ背景＋アーチ写真）にそろえ、グリッドで一続きに見せる */
+  .cover .photo { left: 70px; right: 70px; top: 150px; bottom: auto; height: 720px; border-radius: 470px 470px 0 0; }
+  .cover .shade { display: none; }
+  .cover .no { color: var(--sub); }
+  .cover .text { left: 70px; right: 70px; top: 905px; bottom: auto; color: var(--black); }
+  .cover .tag { font-size: 30px; padding: 8px 22px; margin-bottom: 22px; }
+  .cover h1 { font-size: 74px; line-height: 1.25; }
+  .cover p { font-size: 30px; margin-top: 18px; line-height: 1.5; color: var(--taupe); }
+  .split .cap { background: var(--paper); }
 </style>
 </head>
 <body>
@@ -115,6 +124,7 @@
 <!-- ================= 投稿1：ハウスワークの家 vol.1 ================= -->
 <section class="slide cover" id="p1-1">
   <div class="photo" style="background-image:url(photos/park.jpg); background-size: cover; background-position: 62% center"></div><div class="shade"></div>
+  <img class="mark" src="logo_t.png" alt="">
   <div class="no en">01 / 05</div>
   <div class="text">
     <span class="tag">ハウスワークの家 vol.1</span>
@@ -124,7 +134,7 @@
 </section>
 
 <section class="slide body" id="p1-2">
-  <img class="mark" src="../line-richmenu/assets/logo.webp" alt="">
+  <img class="mark" src="logo_t.png" alt="">
   <div class="no en">02 / 05</div>
   <div class="en">CONCEPT</div>
   <h2 class="mincho">ひとつとして<br>同じ家はない</h2>
@@ -133,7 +143,7 @@
 </section>
 
 <section class="slide body" id="p1-3">
-  <img class="mark" src="../line-richmenu/assets/logo.webp" alt="">
+  <img class="mark" src="logo_t.png" alt="">
   <div class="no en">03 / 05</div>
   <div class="en">DESIGN</div>
   <h2 class="mincho">デザインの特徴</h2>
@@ -145,7 +155,7 @@
 </section>
 
 <section class="slide body" id="p1-4">
-  <img class="mark" src="../line-richmenu/assets/logo.webp" alt="">
+  <img class="mark" src="logo_t.png" alt="">
   <div class="no en">04 / 05</div>
   <div class="en">AREA</div>
   <h2 class="mincho">対応エリア</h2>
@@ -171,16 +181,17 @@
 <!-- ================= 投稿2：ハウスワークの家 vol.2 ================= -->
 <section class="slide cover" id="p2-1">
   <div class="photo" style="background-image:url(photos/IMG_2823_2.jpg); background-size: cover; background-position: center 35%"></div><div class="shade"></div>
+  <img class="mark" src="logo_t.png" alt="">
   <div class="no en">01 / 05</div>
   <div class="text">
     <span class="tag">ハウスワークの家 vol.2</span>
-    <h1 class="mincho" style="font-size:88px">家族らしい<br>暮らしを、かたちに。</h1>
+    <h1 class="mincho">家族らしい<br>暮らしを、かたちに。</h1>
     <p>暮らし方の提案と<br>インテリアのコーディネート</p>
   </div>
 </section>
 
 <section class="slide body" id="p2-2">
-  <img class="mark" src="../line-richmenu/assets/logo.webp" alt="">
+  <img class="mark" src="logo_t.png" alt="">
   <div class="no en">02 / 05</div>
   <div class="en">LIFESTYLE</div>
   <h2 class="mincho">暮らし方から考える<br>家づくり</h2>
@@ -192,7 +203,7 @@
 </section>
 
 <section class="slide body" id="p2-3">
-  <img class="mark" src="../line-richmenu/assets/logo.webp" alt="">
+  <img class="mark" src="logo_t.png" alt="">
   <div class="no en">03 / 05</div>
   <div class="en">LIFESTYLE</div>
   <h2 class="mincho">こんな暮らし、<br>できます</h2>
@@ -227,7 +238,8 @@
 
 <!-- ================= 投稿3：実例紹介 ================= -->
 <section class="slide cover" id="p3-1">
-  <div class="photo" style="background-size: 3000px auto; background-position: -150px -60px"></div><div class="shade"></div>
+  <div class="photo" style="background-size: 2000px auto; background-position: -60px -200px"></div><div class="shade"></div>
+  <img class="mark" src="logo_t.png" alt="">
   <div class="no en">01 / 05</div>
   <div class="text">
     <span class="tag">WORKS ｜ 実例紹介</span>
@@ -257,7 +269,7 @@
 </section>
 
 <section class="slide body" id="p3-4">
-  <img class="mark" src="../line-richmenu/assets/logo.webp" alt="">
+  <img class="mark" src="logo_t.png" alt="">
   <div class="no en">04 / 05</div>
   <div class="en">INTERIOR</div>
   <h2 class="mincho">室内も、<br>素材にこだわって</h2>
