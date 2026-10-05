@@ -97,6 +97,17 @@
   .cta .btn { display: inline-flex; align-items: center; gap: 18px; margin-top: 50px; background: var(--line-green); color: #fff;
               font-size: 42px; font-weight: 700; padding: 26px 60px; border-radius: 999px; }
   .cta .note { font-size: 30px; color: #CFC5B9; margin-top: 26px; }
+  /* 実写真のグリッド・サムネイル */
+  .pics div { background-size: cover; position: relative; }
+  .pics div:first-child { grid-row: span 2; }
+  .pics span { position: absolute; left: 0; bottom: 0; background: rgba(35,31,28,.82); color: #fff;
+               font-size: 30px; font-weight: 700; padding: 10px 22px; }
+  .point .thumb { background-size: cover; background-position: center; border: 4px solid #fff; }
+  .coord { padding-top: 600px; }
+  .coord .topphoto { position: absolute; top: 0; left: 0; right: 0; height: 540px;
+                     background-size: cover; background-position: center 62%; }
+  .coord .flow { margin-top: 40px; gap: 16px; }
+  .coord .flow div { font-size: 38px; padding: 22px 36px; }
 </style>
 </head>
 <body>
@@ -159,7 +170,7 @@
 
 <!-- ================= 投稿2：ハウスワークの家 vol.2 ================= -->
 <section class="slide cover" id="p2-1">
-  <div class="photo" style="background-size: 3000px auto; background-position: -300px -300px"></div><div class="shade"></div>
+  <div class="photo" style="background-image:url(photos/IMG_2827_3.jpg); background-size: cover; background-position: 30% center"></div><div class="shade"></div>
   <div class="no en">01 / 05</div>
   <div class="text">
     <span class="tag">ハウスワークの家 vol.2</span>
@@ -173,10 +184,10 @@
   <div class="no en">02 / 05</div>
   <div class="en">LIFESTYLE</div>
   <h2 class="mincho">暮らし方から考える<br>家づくり</h2>
-  <div class="grid2">
-    <div class="ph">写真差し替え<br>リビング</div>
-    <div class="ph">キッチン・<br>家事動線</div>
-    <div class="ph">収納・<br>ガレージ</div>
+  <div class="grid2 pics">
+    <div style="background-image:url(photos/IMG_2840_2.jpg); background-position: 40% center"><span>リビング</span></div>
+    <div style="background-image:url(photos/IMG_2838_3.jpg); background-position: 55% center"><span>キッチン・ダイニング</span></div>
+    <div style="background-image:url(photos/IMG_2874_5.jpg); background-position: center 60%"><span>寝室</span></div>
   </div>
 </section>
 
@@ -186,17 +197,17 @@
   <div class="en">LIFESTYLE</div>
   <h2 class="mincho">こんな暮らし、<br>できます</h2>
   <div class="points">
-    <div class="point"><div class="n">01</div><div><h3>家事がラクな動線</h3><p>キッチン・洗面・収納を<br>無理なくつなぐ間取り</p></div></div>
-    <div class="point"><div class="n">02</div><div><h3>趣味を楽しむ空間</h3><p>ガレージや書斎など<br>好きなことのための場所</p></div></div>
-    <div class="point"><div class="n">03</div><div><h3>家族が集まるLDK</h3><p>自然と顔を合わせる<br>心地よいつながり</p></div></div>
+    <div class="point"><div class="n thumb" style="background-image:url(photos/IMG_2838_3.jpg)"></div><div><h3>家事がラクな動線</h3><p>キッチンと収納を<br>無理なくつなぐ間取り</p></div></div>
+    <div class="point"><div class="n thumb" style="background-image:url(photos/IMG_2827_3.jpg)"></div><div><h3>家族が集まるLDK</h3><p>大きな窓から光が入る<br>心地よいくつろぎの場所</p></div></div>
+    <div class="point"><div class="n thumb" style="background-image:url(photos/IMG_2874_5.jpg)"></div><div><h3>ほっとする寝室</h3><p>落ち着いた色と素材で<br>一日の疲れをいやす空間</p></div></div>
   </div>
 </section>
 
-<section class="slide body" id="p2-4">
-  <img class="mark" src="../line-richmenu/assets/logo.webp" alt="">
-  <div class="no en">04 / 05</div>
+<section class="slide body coord" id="p2-4">
+  <div class="topphoto" style="background-image:url(photos/IMG_2845.jpg)"></div>
+  <div class="no en" style="color:#fff">04 / 05</div>
   <div class="en">COORDINATE</div>
-  <h2 class="mincho" style="font-size:64px">インテリアデザイナーが<br>コーディネートをサポート</h2>
+  <h2 class="mincho" style="font-size:60px">インテリアデザイナーが<br>コーディネートをサポート</h2>
   <div class="flow">
     <div><i>01</i>ご要望・暮らし方のヒアリング</div>
     <div><i>02</i>自由設計でプランニング</div>
