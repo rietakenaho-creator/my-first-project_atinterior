@@ -117,77 +117,20 @@
   .cover h1 { font-size: 74px; line-height: 1.25; }
   .cover p { font-size: 30px; margin-top: 18px; line-height: 1.5; color: var(--taupe); }
   .split .cap { background: var(--paper); }
-  /* ===== 洗練トーン：直線・細罫線・余白で構成（丸・塗りタグ・装飾を排除） ===== */
-  :root { --paper: #ECE7E0; --rule: #C9BFB2; }
-  .dark { background: #2A2622; }
-  .slide .mark { height: 44px; top: 56px; }
-  .slide .no { font-size: 24px; color: var(--taupe); letter-spacing: .18em; }
-  .slide .swipe { font-size: 24px; letter-spacing: .14em; font-weight: 500; }
-  .slide .swipe::after { font-size: 28px; color: var(--taupe); }
-
-  .cover .photo { top: 140px; height: 760px; border-radius: 0; }
-  .cover .text { top: 950px; }
-  .cover .tag { display: block; background: none; color: var(--taupe); padding: 0 0 20px; margin-bottom: 30px;
-                font-size: 26px; font-weight: 500; letter-spacing: .22em; border-bottom: 1px solid var(--rule); }
-  .cover h1 { font-size: 62px; line-height: 1.45; letter-spacing: .08em; }
-  .cover p { font-size: 26px; letter-spacing: .08em; margin-top: 16px; }
-
-  .body { padding: 180px 90px 0; }
-  .body .en { font-size: 26px; letter-spacing: .32em; color: var(--taupe); }
-  .body h2 { font-size: 58px; line-height: 1.5; letter-spacing: .06em; margin-top: 20px; }
-  .body .lead { font-size: 31px; line-height: 2.1; letter-spacing: .04em; margin-top: 50px; }
-  .body .lead b { background: none; font-weight: 700; }
-
-  .points { gap: 0; margin-top: 60px; }
-  .point { background: none; grid-template-columns: 130px 1fr; padding: 40px 0; border-top: 1px solid var(--rule); }
-  .point:last-child { border-bottom: 1px solid var(--rule); }
-  .point .n { background: none; width: auto; height: auto; border-radius: 0; place-items: center start;
-              color: var(--taupe); font-size: 54px; }
-  .point .n.thumb { width: 120px; height: 120px; border: none; background-size: cover; background-position: center; }
-  .coord { padding-top: 610px; }
-  .point h3 { font-size: 38px; letter-spacing: .04em; }
-  .point p { font-size: 27px; line-height: 1.6; }
-
-  .flow, .coord .flow { gap: 0; margin-top: 50px; }
-  .flow div, .coord .flow div { background: none; border-top: 1px solid var(--rule); padding: 28px 0; font-size: 34px;
-                                letter-spacing: .04em; }
-  .flow div:last-child { border-bottom: 1px solid var(--rule); }
-  .flow div.hl { background: none; color: var(--black); }
-  .flow div i { color: var(--taupe); font-size: 40px; }
-  .flow div.hl i { color: var(--orange); }
-
-  .rings div { background: none !important; border: 1px solid var(--rule); }
-  .rings .r1 { background: var(--black) !important; border: none; }
-  .rings span { font-size: 26px; font-weight: 500; letter-spacing: .12em; color: var(--taupe); }
-  .rings .r1 span { color: #fff; font-size: 32px; }
-
-  .ph { background: #E2DBD2; border: none; font-size: 24px; font-weight: 500; letter-spacing: .14em; color: var(--taupe); }
-  .ph::before { content: none; }
-  .pics span { background: rgba(35,31,28,.55); font-size: 22px; font-weight: 500; letter-spacing: .14em; padding: 10px 18px; }
-
-  .split .cap { padding: 64px 90px 0; }
-  .split .cap .en { font-size: 26px; letter-spacing: .32em; color: var(--taupe); }
-  .split .cap h2 { font-size: 52px; letter-spacing: .06em; }
-  .split .cap p { font-size: 29px; line-height: 1.9; }
-
-  .cta .en { font-size: 26px; letter-spacing: .32em; color: #BFB3A5; }
-  .cta h2 { font-size: 58px; line-height: 1.55; letter-spacing: .06em; }
-  .cta .phone { border-radius: 40px; }
-  .cta .btn { background: none; border: 1px solid #fff; border-radius: 0; font-size: 30px; font-weight: 500;
-              letter-spacing: .16em; padding: 22px 60px; }
-  .cta .btn::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--line-green); }
-  .cta .note { font-size: 24px; letter-spacing: .1em; color: #A99D90; }
+  /* 3枚の統一感：写真の色調をそろえ、アーチが同じ「地面の線」に立つように見せる */
+  .cover .photo { filter: saturate(.82) sepia(.14) contrast(.96) brightness(1.02); }
+  .cover .ground { position: absolute; left: 0; right: 0; top: 869px; height: 3px; background: var(--taupe); }
 </style>
 </head>
 <body>
 
 <!-- ================= 投稿1：ハウスワークの家 vol.1 ================= -->
 <section class="slide cover" id="p1-1">
-  <div class="photo" style="background-image:url(photos/park.jpg); background-size: cover; background-position: 62% center"></div><div class="shade"></div>
+  <div class="photo" style="background-image:url(photos/park.jpg); background-size: cover; background-position: 62% center"></div><div class="shade"></div><div class="ground"></div>
   <img class="mark" src="logo_t.png" alt="">
   <div class="no en">01 / 05</div>
   <div class="text">
-    <span class="tag">ハウスワークの家 vol.1</span>
+    <span class="tag">ハウスワークの家 ｜ 01</span>
     <h1 class="mincho">土地に合わせて、<br>暮らしを描く。</h1>
     <p>小山市の自由設計・注文住宅<br>コンセプトとデザインの特徴</p>
   </div>
@@ -240,11 +183,11 @@
 
 <!-- ================= 投稿2：ハウスワークの家 vol.2 ================= -->
 <section class="slide cover" id="p2-1">
-  <div class="photo" style="background-image:url(photos/IMG_2823_2.jpg); background-size: cover; background-position: center 35%"></div><div class="shade"></div>
+  <div class="photo" style="background-image:url(photos/IMG_2823_2.jpg); background-size: cover; background-position: center 35%"></div><div class="shade"></div><div class="ground"></div>
   <img class="mark" src="logo_t.png" alt="">
   <div class="no en">01 / 05</div>
   <div class="text">
-    <span class="tag">ハウスワークの家 vol.2</span>
+    <span class="tag">ハウスワークの家 ｜ 02</span>
     <h1 class="mincho">家族らしい<br>暮らしを、かたちに。</h1>
     <p>暮らし方の提案と<br>インテリアのコーディネート</p>
   </div>
@@ -298,13 +241,13 @@
 
 <!-- ================= 投稿3：実例紹介 ================= -->
 <section class="slide cover" id="p3-1">
-  <div class="photo" style="background-size: 2000px auto; background-position: -60px -200px"></div><div class="shade"></div>
+  <div class="photo" style="background-size: 2000px auto; background-position: -60px -200px"></div><div class="shade"></div><div class="ground"></div>
   <img class="mark" src="logo_t.png" alt="">
   <div class="no en">01 / 05</div>
   <div class="text">
-    <span class="tag">WORKS ｜ 実例紹介</span>
+    <span class="tag">建築実例 ｜ 03</span>
     <h1 class="mincho">黒と木の、<br>ガレージのある家</h1>
-    <p>素材の表情を楽しむ外観デザイン</p>
+    <p>素材の表情を楽しむ<br>外観デザイン</p>
   </div>
 </section>
 
