@@ -34,9 +34,9 @@ const { richMenuId } = await call("https://api.line.me/v2/bot/richmenu", {
 console.log("作成:", richMenuId);
 
 // 2. 画像をアップロード
-const image = await readFile(new URL("richmenu.png", here));
+const image = await readFile(new URL("richmenu.jpg", here));
 await call(`https://api-data.line.me/v2/bot/richmenu/${richMenuId}/content`, {
-  method: "POST", headers: { "Content-Type": "image/png" }, body: image,
+  method: "POST", headers: { "Content-Type": "image/jpeg" }, body: image,
 });
 console.log("画像アップロード完了");
 
