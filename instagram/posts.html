@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>ハウスワーク Instagram 固定投稿モック</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@700&family=Zen+Kaku+Gothic+New:wght@500;700&family=Cormorant+Garamond:wght@600&display=swap" rel="stylesheet">
+<style>
+  /* Instagram 縦型投稿 1080 x 1350px（4:5）。色・書体はLINEリッチメニューと共通 */
+  :root {
+    --black: #231F1C; --orange: #F39800; --taupe: #7B6A56;
+    --paper: #FFFFFF; --tint: #F4F1ED; --line: #E4DED6; --sub: #6E6357;
+    --line-green: #06C755;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #ddd; font-family: "Zen Kaku Gothic New", "IPAGothic", sans-serif; color: var(--black);
+         display: flex; flex-wrap: wrap; gap: 40px; padding: 40px; }
+  .en { font-family: "Cormorant Garamond", serif; letter-spacing: .22em; }
+  .mincho { font-family: "Shippori Mincho", "IPAGothic", serif; }
+
+  .slide { width: 1080px; height: 1350px; position: relative; overflow: hidden; background: var(--paper); }
+  .slide .no { position: absolute; top: 56px; right: 64px; font-size: 30px; letter-spacing: .1em; color: var(--sub); }
+  .slide .mark { position: absolute; top: 48px; left: 64px; height: 56px; }
+  .slide .swipe { position: absolute; right: 64px; bottom: 56px; font-size: 30px; font-weight: 700; color: var(--sub);
+                  display: flex; align-items: center; gap: 14px; }
+  .slide .swipe::after { content: "→"; color: var(--orange); font-size: 40px; }
+  .dark { background: var(--black); color: #fff; }
+  .dark .no, .dark .swipe { color: #CFC5B9; }
+
+  .photo { background: url("../line-richmenu/assets/hero.jpg") no-repeat; }
+
+  /* カバー（写真全面） */
+  .cover .photo { position: absolute; inset: 0; background-size: auto 100%; background-position: 10% center; }
+  .cover .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(35,31,28,0) 35%, rgba(35,31,28,.88) 78%); }
+  .cover .text { position: absolute; left: 72px; right: 72px; bottom: 120px; color: #fff; }
+  .cover .tag { display: inline-block; background: var(--orange); color: var(--black); font-weight: 700; font-size: 34px;
+                padding: 10px 26px; margin-bottom: 34px; }
+  .cover h1 { font-size: 104px; line-height: 1.2; letter-spacing: .03em; }
+  .cover p { font-size: 40px; margin-top: 30px; font-weight: 500; line-height: 1.5; color: #F1EAE2; }
+  .cover .no { color: #fff; }
+
+  /* 本文スライド */
+  .body { padding: 170px 80px 0; }
+  .body .en { font-size: 34px; color: var(--orange); }
+  .body h2 { font-size: 78px; line-height: 1.3; margin-top: 16px; letter-spacing: .03em; }
+  .body .lead { font-size: 38px; line-height: 1.75; margin-top: 44px; font-weight: 500; }
+  .body .lead b { background: linear-gradient(transparent 62%, #FCE3B8 62%); }
+  .dark .lead b { background: none; color: var(--orange); }
+
+  .points { margin-top: 60px; display: grid; gap: 30px; }
+  .point { display: grid; grid-template-columns: 110px 1fr; align-items: center; gap: 34px;
+           background: var(--tint); padding: 34px 40px; }
+  .point .n { width: 110px; height: 110px; border-radius: 50%; background: var(--black); color: var(--orange);
+              display: grid; place-items: center; font-family: "Cormorant Garamond", serif; font-size: 52px; }
+  .point h3 { font-size: 44px; }
+  .point p { font-size: 32px; color: var(--sub); margin-top: 8px; line-height: 1.5; font-weight: 500; }
+
+  .split { display: grid; grid-template-rows: 760px 1fr; height: 100%; }
+  .split .photo { background-size: auto 100%; }
+  .split .cap { padding: 60px 80px 0; }
+  .split .cap .en { font-size: 32px; color: var(--orange); }
+  .split .cap h2 { font-size: 64px; margin-top: 12px; }
+  .split .cap p { font-size: 36px; line-height: 1.7; margin-top: 24px; font-weight: 500; }
+
+  /* 写真差し替え枠 */
+  .ph { background: repeating-linear-gradient(45deg, #EEE9E3 0 24px, #F6F3EF 24px 48px);
+        border: 4px dashed #C9BBA8; display: grid; place-items: center; text-align: center; color: var(--taupe);
+        font-size: 34px; font-weight: 700; line-height: 1.5; }
+  .ph::before { content: "📷"; display: block; font-size: 64px; margin-bottom: 8px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 50px; height: 760px; }
+  .grid2 .ph:first-child { grid-row: span 2; }
+
+  .map { margin-top: 60px; display: grid; place-items: center; }
+  .rings { position: relative; width: 760px; height: 760px; }
+  .rings div { position: absolute; border-radius: 50%; display: grid; place-items: start center; }
+  .rings .r3 { inset: 0; background: #F7F3EE; }
+  .rings .r2 { inset: 130px; background: #EFE7DD; }
+  .rings .r1 { inset: 270px; background: var(--orange); place-items: center; }
+  .rings span { font-size: 32px; font-weight: 700; margin-top: 46px; color: var(--taupe); }
+  .rings .r1 span { margin: 0; color: var(--black); font-size: 40px; text-align: center; line-height: 1.3; }
+
+  .flow { margin-top: 70px; display: grid; gap: 22px; }
+  .flow div { display: flex; align-items: center; gap: 30px; font-size: 42px; font-weight: 700;
+              padding: 30px 40px; background: var(--tint); }
+  .flow div i { font-style: normal; font-family: "Cormorant Garamond", serif; color: var(--orange); font-size: 46px; width: 70px; }
+  .flow div.hl { background: var(--black); color: #fff; }
+
+  /* LINE誘導（最終スライド） */
+  .cta { display: grid; grid-template-columns: 1fr; padding: 150px 80px 0; text-align: center; }
+  .cta .en { font-size: 34px; color: var(--orange); }
+  .cta h2 { font-size: 72px; line-height: 1.35; margin-top: 18px; }
+  .cta .phone { margin: 56px auto 0; width: 600px; background: #111; border-radius: 56px; padding: 26px 22px 30px; }
+  .cta .phone .scr { background: #8CABD9; border-radius: 30px; overflow: hidden; }
+  .cta .phone .hd { background: #6E8DBB; color: #fff; font-size: 26px; font-weight: 700; padding: 16px; }
+  .cta .phone .msg { color: var(--black); background: #fff; border-radius: 22px; font-size: 24px; text-align: left; padding: 14px 20px;
+                     margin: 24px 120px 24px 22px; }
+  .cta .phone img { display: block; width: 100%; }
+  .cta .btn { display: inline-flex; align-items: center; gap: 18px; margin-top: 50px; background: var(--line-green); color: #fff;
+              font-size: 42px; font-weight: 700; padding: 26px 60px; border-radius: 999px; }
+  .cta .note { font-size: 30px; color: #CFC5B9; margin-top: 26px; }
+</style>
+</head>
+<body>
+
+<!-- ================= 投稿1：ハウスワークの家 vol.1 ================= -->
+<section class="slide cover" id="p1-1">
+  <div class="photo"></div><div class="shade"></div>
+  <div class="no en">01 / 05</div>
+  <div class="text">
+    <span class="tag">ハウスワークの家 vol.1</span>
+    <h1 class="mincho">土地に合わせて、<br>暮らしを描く。</h1>
+    <p>小山市の自由設計・注文住宅<br>コンセプトとデザインの特徴</p>
+  </div>
+</section>
+
+<section class="slide body" id="p1-2">
+  <img class="mark" src="../line-richmenu/assets/logo.webp" alt="">
+  <div class="no en">02 / 05</div>
+  <div class="en">CONCEPT</div>
+  <h2 class="mincho">ひとつとして<br>同じ家はない</h2>
+  <p class="lead">土地の形や日当たり、周りの環境は<br>一つひとつ違います。<br>ハウスワークは<b>敷地をていねいに調べ</b>、<br>その場所とご家族に合わせた<br><b>自由設計</b>でご提案します。</p>
+  <div class="swipe">デザインの特徴</div>
+</section>
+
+<section class="slide body" id="p1-3">
+  <img class="mark" src="../line-richmenu/assets/logo.webp" alt="">
+  <div class="no en">03 / 05</div>
+  <div class="en">DESIGN</div>
+  <h2 class="mincho">デザインの特徴</h2>
+  <div class="points">
+    <div class="point"><div class="n">01</div><div><h3>素材を活かした外観</h3><p>黒の外壁 × 木の質感。<br>シンプルで飽きのこないデザイン</p></div></div>
+    <div class="point"><div class="n">02</div><div><h3>敷地に合わせたプラン</h3><p>光・風・視線を読み、<br>心地よく過ごせる配置に</p></div></div>
+    <div class="point"><div class="n">03</div><div><h3>こだわりを形に</h3><p>ガレージや趣味の空間も<br>自由設計で実現</p></div></div>
+  </div>
+</section>
+
+<section class="slide body" id="p1-4">
+  <img class="mark" src="../line-richmenu/assets/logo.webp" alt="">
+  <div class="no en">04 / 05</div>
+  <div class="en">AREA</div>
+  <h2 class="mincho">対応エリア</h2>
+  <div class="map">
+    <div class="rings">
+      <div class="r3"><span>埼玉県北部</span></div>
+      <div class="r2"><span>栃木県・茨城県西部</span></div>
+      <div class="r1"><span>小山市<br>本社</span></div>
+    </div>
+  </div>
+  <p class="lead" style="text-align:center;margin-top:40px">本社から車で約1時間の範囲が目安です</p>
+</section>
+
+<section class="slide dark cta" id="p1-5">
+  <div class="no en">05 / 05</div>
+  <div class="en">LINE</div>
+  <h2 class="mincho">続きはLINEで<br>ご覧いただけます</h2>
+  <div class="phone"><div class="scr"><div class="hd">ハウスワーク</div><div class="msg">友だち追加ありがとうございます！</div><img src="../line-richmenu/richmenu.jpg" alt=""></div></div>
+  <div class="btn">LINE 友だち追加</div>
+  <p class="note">プロフィールのリンクから追加できます</p>
+</section>
+
+<!-- ================= 投稿2：ハウスワークの家 vol.2 ================= -->
+<section class="slide cover" id="p2-1">
+  <div class="photo" style="background-size: 3000px auto; background-position: -300px -300px"></div><div class="shade"></div>
+  <div class="no en">01 / 05</div>
+  <div class="text">
+    <span class="tag">ハウスワークの家 vol.2</span>
+    <h1 class="mincho" style="font-size:88px">家族らしい<br>暮らしを、かたちに。</h1>
+    <p>暮らし方の提案と<br>インテリアのコーディネート</p>
+  </div>
+</section>
+
+<section class="slide body" id="p2-2">
+  <img class="mark" src="../line-richmenu/assets/logo.webp" alt="">
+  <div class="no en">02 / 05</div>
+  <div class="en">LIFESTYLE</div>
+  <h2 class="mincho">暮らし方から考える<br>家づくり</h2>
+  <div class="grid2">
+    <div class="ph">写真差し替え<br>リビング</div>
+    <div class="ph">キッチン・<br>家事動線</div>
+    <div class="ph">収納・<br>ガレージ</div>
+  </div>
+</section>
+
+<section class="slide body" id="p2-3">
+  <img class="mark" src="../line-richmenu/assets/logo.webp" alt="">
+  <div class="no en">03 / 05</div>
+  <div class="en">LIFESTYLE</div>
+  <h2 class="mincho">こんな暮らし、<br>できます</h2>
+  <div class="points">
+    <div class="point"><div class="n">01</div><div><h3>家事がラクな動線</h3><p>キッチン・洗面・収納を<br>無理なくつなぐ間取り</p></div></div>
+    <div class="point"><div class="n">02</div><div><h3>趣味を楽しむ空間</h3><p>ガレージや書斎など<br>好きなことのための場所</p></div></div>
+    <div class="point"><div class="n">03</div><div><h3>家族が集まるLDK</h3><p>自然と顔を合わせる<br>心地よいつながり</p></div></div>
+  </div>
+</section>
+
+<section class="slide body" id="p2-4">
+  <img class="mark" src="../line-richmenu/assets/logo.webp" alt="">
+  <div class="no en">04 / 05</div>
+  <div class="en">COORDINATE</div>
+  <h2 class="mincho" style="font-size:64px">インテリアデザイナーが<br>コーディネートをサポート</h2>
+  <div class="flow">
+    <div><i>01</i>ご要望・暮らし方のヒアリング</div>
+    <div><i>02</i>自由設計でプランニング</div>
+    <div class="hl"><i>03</i>インテリアコーディネート</div>
+    <div><i>04</i>完成・お引き渡し</div>
+  </div>
+</section>
+
+<section class="slide dark cta" id="p2-5">
+  <div class="no en">05 / 05</div>
+  <div class="en">LINE</div>
+  <h2 class="mincho">ご相談・見学予約は<br>LINEから</h2>
+  <div class="phone"><div class="scr"><div class="hd">ハウスワーク</div><div class="msg">友だち追加ありがとうございます！</div><img src="../line-richmenu/richmenu.jpg" alt=""></div></div>
+  <div class="btn">LINE 友だち追加</div>
+  <p class="note">プロフィールのリンクから追加できます</p>
+</section>
+
+<!-- ================= 投稿3：実例紹介 ================= -->
+<section class="slide cover" id="p3-1">
+  <div class="photo" style="background-size: 3000px auto; background-position: -150px -60px"></div><div class="shade"></div>
+  <div class="no en">01 / 05</div>
+  <div class="text">
+    <span class="tag">WORKS ｜ 実例紹介</span>
+    <h1 class="mincho">黒と木の、<br>ガレージのある家</h1>
+    <p>素材の表情を楽しむ外観デザイン</p>
+  </div>
+</section>
+
+<section class="slide split" id="p3-2">
+  <div class="photo" style="background-size: 2700px auto; background-position: -250px -470px"></div>
+  <div class="no en" style="color:#fff">02 / 05</div>
+  <div class="cap">
+    <div class="en">ENTRANCE</div>
+    <h2 class="mincho">木目が迎える玄関まわり</h2>
+    <p>黒い外壁の中に木の質感を組み合わせ、<br>やわらかな印象に。</p>
+  </div>
+</section>
+
+<section class="slide split" id="p3-3">
+  <div class="photo" style="background-size: 4000px auto; background-position: -900px -1120px"></div>
+  <div class="no en" style="color:#fff">03 / 05</div>
+  <div class="cap">
+    <div class="en">GARAGE</div>
+    <h2 class="mincho">住まいとつながるガレージ</h2>
+    <p>雨の日も濡れずに出入りできる、<br>暮らしに寄り添う配置。</p>
+  </div>
+</section>
+
+<section class="slide body" id="p3-4">
+  <img class="mark" src="../line-richmenu/assets/logo.webp" alt="">
+  <div class="no en">04 / 05</div>
+  <div class="en">INTERIOR</div>
+  <h2 class="mincho">室内も、<br>素材にこだわって</h2>
+  <div class="grid2">
+    <div class="ph">写真差し替え<br>LDK</div>
+    <div class="ph">キッチン</div>
+    <div class="ph">寝室・<br>ワークスペース</div>
+  </div>
+</section>
+
+<section class="slide dark cta" id="p3-5">
+  <div class="no en">05 / 05</div>
+  <div class="en">ROOM TOUR</div>
+  <h2 class="mincho">古河展示場の<br>Room Tour はLINEで</h2>
+  <div class="phone"><div class="scr"><div class="hd">ハウスワーク</div><div class="msg">友だち追加ありがとうございます！</div><img src="../line-richmenu/richmenu.jpg" alt=""></div></div>
+  <div class="btn">LINE 友だち追加</div>
+  <p class="note">メニューの「建築実例」「見学予約」から</p>
+</section>
+
+</body>
+</html>

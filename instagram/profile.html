@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>ハウスワーク Instagram プロフィールモック</title>
+<style>
+  /* プロフィール画面のイメージ（スマホ幅 1080px）。固定投稿3件 + LINE連携のハイライト・リンク */
+  :root { --black: #231F1C; --orange: #F39800; --taupe: #7B6A56; --sub: #737373; --line: #DBDBDB; --link: #00376B; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #ddd; font-family: "Zen Kaku Gothic New", "IPAGothic", sans-serif; color: #000; padding: 40px; }
+  #profile { width: 1080px; background: #fff; padding-bottom: 20px; }
+
+  .bar { display: flex; align-items: center; justify-content: space-between; padding: 40px 44px 24px; font-size: 44px; font-weight: 700; }
+  .bar span { font-size: 40px; letter-spacing: .02em; }
+  .head { display: flex; align-items: center; gap: 70px; padding: 10px 44px 0; }
+  .avatar { width: 240px; height: 240px; border-radius: 50%; border: 2px solid var(--line); background: #fff;
+            display: grid; place-items: center; overflow: hidden; flex: 0 0 auto; }
+  .avatar img { width: 200px; }
+  .stats { display: flex; flex: 1; justify-content: space-around; text-align: center; }
+  .stats b { display: block; font-size: 44px; }
+  .stats span { font-size: 32px; }
+  .bio { padding: 30px 44px 0; font-size: 34px; line-height: 1.55; }
+  .bio .name { font-weight: 700; }
+  .bio .cat { color: var(--sub); }
+  .bio .link { color: var(--link); font-weight: 700; display: flex; align-items: center; gap: 12px; margin-top: 6px; }
+  .bio .link i { font-style: normal; background: #06C755; color: #fff; font-size: 24px; padding: 2px 12px; border-radius: 8px; }
+  .btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; padding: 34px 44px 0; }
+  .btns div { background: #EFEFEF; border-radius: 16px; text-align: center; font-size: 32px; font-weight: 700; padding: 18px 0; }
+  .btns div.main { background: #0095F6; color: #fff; }
+
+  .hl { display: flex; gap: 36px; padding: 40px 44px 30px; }
+  .hl div { text-align: center; font-size: 26px; width: 156px; }
+  .hl .ring { width: 150px; height: 150px; border-radius: 50%; border: 2px solid var(--line); padding: 7px; margin-bottom: 12px; }
+  .hl .ring span { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%;
+                   font-family: "Shippori Mincho", serif; font-weight: 700; font-size: 26px; line-height: 1.2; color: #fff; }
+
+  .tabs { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+  .tabs div { text-align: center; padding: 26px 0; font-size: 30px; color: var(--sub); }
+  .tabs div.on { color: #000; border-bottom: 3px solid #000; font-weight: 700; }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  .grid div { aspect-ratio: 4 / 5; position: relative; background-size: cover; background-position: center; }
+  .grid .pin::after { content: "📌"; position: absolute; top: 12px; right: 14px; font-size: 34px; }
+  .grid .pin::before { content: "▣"; position: absolute; top: 10px; left: 14px; font-size: 34px; color: #fff; text-shadow: 0 0 6px rgba(0,0,0,.5); }
+  .grid .old { background: repeating-linear-gradient(45deg, #EEE9E3 0 20px, #F6F3EF 20px 40px); display: grid; place-items: center;
+               color: #A99A88; font-size: 28px; font-weight: 700; }
+</style>
+</head>
+<body>
+<section id="profile">
+  <div class="bar"><span>house0304work</span><span>≡</span></div>
+  <div class="head">
+    <div class="avatar"><img src="../line-richmenu/assets/logo.webp" alt=""></div>
+    <div class="stats"><div><b>—</b><span>投稿</span></div><div><b>—</b><span>フォロワー</span></div><div><b>—</b><span>フォロー中</span></div></div>
+  </div>
+  <div class="bio">
+    <div class="name">ハウスワーク｜小山市の注文住宅</div>
+    <div class="cat">住宅建築</div>
+    <div>自由設計 × インテリアコーディネート<br>📍 古河展示場 見学受付中<br>▼ 見学予約・Room Tour はLINEから</div>
+    <div class="link"><i>LINE</i>友だち追加はこちら</div>
+  </div>
+  <div class="btns"><div class="main">フォロー</div><div>メッセージ</div><div>連絡先</div></div>
+
+  <!-- ハイライト：LINEリッチメニューと同じ並び -->
+  <div class="hl">
+    <div><div class="ring"><span style="background:#231F1C">ハウス<br>ワーク<br>の家</span></div>コンセプト</div>
+    <div><div class="ring"><span style="background:#231F1C">建築<br>実例</span></div>建築実例</div>
+    <div><div class="ring"><span style="background:#7B6A56">Room<br>Tour</span></div>古河展示場</div>
+    <div><div class="ring"><span style="background:#7B6A56">お客様<br>の声</span></div>お客様の声</div>
+    <div><div class="ring"><span style="background:#F39800;color:#231F1C">見学<br>予約</span></div>見学予約</div>
+  </div>
+
+  <div class="tabs"><div class="on">▦ 投稿</div><div>▷ リール</div><div>👤 タグ</div></div>
+  <div class="grid">
+    <div class="pin" style="background-image:url(out/p1-1.jpg)"></div>
+    <div class="pin" style="background-image:url(out/p2-1.jpg)"></div>
+    <div class="pin" style="background-image:url(out/p3-1.jpg)"></div>
+    <div class="old">既存の投稿</div><div class="old">既存の投稿</div><div class="old">既存の投稿</div>
+  </div>
+</section>
+</body>
+</html>
