@@ -10,7 +10,7 @@
     },
     {
       "bounds": { "x": 0, "y": 843, "width": 833, "height": 843 },
-      "action": { "type": "uri", "label": "建築実例・古河展示場", "uri": "{{URL_WORKS}}" }
+      "action": { "type": "uri", "label": "建築実例・ROOM TOUR", "uri": "{{URL_WORKS}}" }
     },
     {
       "bounds": { "x": 833, "y": 843, "width": 834, "height": 843 },
