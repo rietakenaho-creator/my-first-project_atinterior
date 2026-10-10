@@ -14,7 +14,7 @@
     },
     {
       "bounds": { "x": 833, "y": 843, "width": 834, "height": 843 },
-      "action": { "type": "uri", "label": "家づくり資料プレゼント", "uri": "{{URL_CATALOG}}" }
+      "action": { "type": "uri", "label": "家づくりBOOKプレゼント", "uri": "{{URL_CATALOG}}" }
     },
     {
       "bounds": { "x": 1667, "y": 843, "width": 833, "height": 843 },
