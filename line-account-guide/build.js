@@ -422,7 +422,7 @@ async function icon(name, hex, size = 256) {
       bold: true, align: "center", valign: "middle", margin: 0, isTextBox: true, objectName: `menu-badge-${i + 1}` }));
   // 説明
   const menu = [
-    ["ハウスワークの家", "コンセプト・デザイン・暮らし・インテリアを紹介"],
+    ["ハウスワークの家", "選べるデザイン注文住宅。会社と家づくりの紹介"],
     ["建築実例", "施工事例と、古河展示場の Room Tour 動画が見られる"],
     ["家づくり資料プレゼント", "家づくりの資料を申し込める"],
     ["見学予約", "展示場の見学をその場で予約できる"],

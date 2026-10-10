@@ -95,6 +95,11 @@
 
   .reserve { background: var(--orange); color: var(--black); }
   .reserve .tag { background: var(--black); color: #fff; padding: 18px 56px; font-size: 52px; }
+  /* 上段：項目は出さず、キャッチを1行で */
+  .about { justify-content: center; padding-top: 0; }
+  .about .lead { font-size: 66px; font-weight: 700; letter-spacing: .08em; margin-top: 44px; color: var(--ink); }
+  .about .about-en { font-size: 54px; color: var(--orange); margin-top: 44px; }
+  .about .about-en + h1 { margin-top: 6px; }
 </style>
 </head>
 <body>
@@ -103,13 +108,9 @@
   <section class="top">
     <div class="about">
       <img class="logo" src="assets/logo.webp" alt="HOUSE WORK 株式会社ハウスワーク">
+      <div class="en about-en">ABOUT US</div>
       <h1 class="mincho">ハウスワークの家</h1>
-      <ul class="points">
-        <li>コンセプト</li>
-        <li>デザインの特徴</li>
-        <li class="wide">暮らしの提案</li>
-        <li class="wide">インテリアコーディネート</li>
-      </ul>
+      <p class="lead">選べるデザイン注文住宅</p>
     </div>
     <div class="photo">
       <div class="more">詳しく見る
