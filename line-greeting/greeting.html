@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>ハウスワーク LINE あいさつメッセージ</title>
+<style>
+  /* LINEトーク画面のイメージ（友だち追加直後） */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #ddd; font-family: "Zen Kaku Gothic New", "IPAGothic", sans-serif; padding: 40px; }
+  #greeting { width: 1080px; background: #8CA9D3; display: flex; flex-direction: column; }
+  .hd { background: #fff; display: flex; align-items: center; justify-content: space-between; padding: 34px 40px;
+        font-size: 38px; font-weight: 700; color: #111; border-bottom: 1px solid #ddd; }
+  .hd span { font-size: 34px; color: #666; font-weight: 500; }
+  .talk { padding: 40px 30px 50px; display: flex; flex-direction: column; gap: 26px; }
+  .date { align-self: center; background: rgba(0,0,0,.18); color: #fff; font-size: 24px; padding: 6px 22px; border-radius: 999px; }
+  .row { display: flex; gap: 20px; align-items: flex-start; }
+  .av { width: 92px; height: 92px; border-radius: 50%; background: #fff; flex: 0 0 auto; display: grid; place-items: center; overflow: hidden; }
+  .av img { width: 78px; }
+  .col { display: flex; flex-direction: column; gap: 14px; max-width: 800px; }
+  .name { font-size: 24px; color: #fff; }
+  .bubble { background: #fff; border-radius: 34px; padding: 30px 36px; font-size: 30px; line-height: 1.65; color: #111; white-space: pre-wrap; }
+  .bubble b { font-weight: inherit; }
+  /* LINEのテキストは装飾不可のため、モックも同じ書式で表示 */
+  .time { font-size: 22px; color: #fff; align-self: flex-end; margin-left: 8px; }
+  .menu img { display: block; width: 100%; }
+  .bar { background: #fff; text-align: center; font-size: 30px; font-weight: 700; color: #333; padding: 22px; border-top: 1px solid #ddd; }
+</style>
+</head>
+<body>
+<section id="greeting">
+  <div class="hd">ハウスワーク <span>☰</span></div>
+  <div class="talk">
+    <div class="date">今日</div>
+    <div class="row">
+      <div class="av"><img src="../line-richmenu/assets/logo.webp" alt=""></div>
+      <div class="col">
+        <div class="name">ハウスワーク</div>
+        <div class="bubble">〇〇さん、はじめまして。
+株式会社ハウスワークです。
+友だち追加ありがとうございます。
+
+小山・古河エリアをはじめ、地域で家づくりをお考えの皆さまへ。
+ハウスワークは、<b>あなたらしい暮らしのかたち</b>をご提案します。
+
+経験と実績を重ねた家づくりのマイスターが、これからの暮らしに寄り添うデザインを<b>自由設計</b>でかたちにします。
+
+<span class="catch">理想の暮らしを、ハウスワークの家とともに。</span></div>
+        <div class="bubble">画面下のメニューから、ご覧いただけます。
+
+<b>▼ハウスワークの家</b>
+選べるデザイン注文住宅
+<b>▼建築実例</b>
+ROOM TOURでお家の中をご紹介
+<b>▼家づくり資料プレゼント</b>
+家づくりに役立つ資料をお届けします
+<b>▼見学予約</b>
+古河の家 オープンルーム公開中
+
+ご質問・ご相談は、このトークからお気軽にどうぞ。</div>
+      </div>
+    </div>
+  </div>
+  <div class="menu"><img src="../line-richmenu/richmenu.jpg" alt=""></div>
+  <div class="bar">メニューを開く ▼</div>
+</section>
+</body>
+</html>
