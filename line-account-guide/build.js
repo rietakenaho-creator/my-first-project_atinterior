@@ -387,7 +387,7 @@ async function icon(name, hex, size = 256) {
     { text: "お願いしたいこと", options: { bold: true, color: C.accent1, fontSize: 18, breakLine: true } },
     { text: "各ボタンのリンク先URL", options: { bullet: true, breakLine: true } },
     { text: "　建築実例・古河展示場 Room Tour", options: { breakLine: true, color: C.accent4 } },
-    { text: "　お客様の声／見学予約フォーム", options: { breakLine: true, color: C.accent4 } },
+    { text: "　資料請求フォーム／見学予約フォーム", options: { breakLine: true, color: C.accent4 } },
     { text: "営業時間・定休日", options: { bullet: true, breakLine: true } },
     { text: "展示場や施工の写真（あれば）", options: { bullet: true } },
   ], { x: 7.4, y: 1.85, w: 5.0, h: 2.8, fontSize: 16, color: C.background1, valign: "top", margin: 0,
@@ -422,9 +422,9 @@ async function icon(name, hex, size = 256) {
       bold: true, align: "center", valign: "middle", margin: 0, isTextBox: true, objectName: `menu-badge-${i + 1}` }));
   // 説明
   const menu = [
-    ["ハウスワークの家", "コンセプト・デザイン・暮らし方・コーディネートを紹介"],
+    ["ハウスワークの家", "コンセプト・デザイン・暮らし・インテリアを紹介"],
     ["建築実例", "施工事例と、古河展示場の Room Tour 動画が見られる"],
-    ["お客様の声", "実際に建てた方の感想や家づくりストーリーを読める"],
+    ["家づくり資料プレゼント", "家づくりの資料を申し込める"],
     ["見学予約", "展示場の見学をその場で予約できる"],
   ];
   menu.forEach(([head, body], i) => {
