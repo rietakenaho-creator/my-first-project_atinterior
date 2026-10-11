@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>新築住宅ポータル</title>
+  <meta name="description" content="新築一戸建ての物件を探せるポータルサイト">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#">🏠 新築住宅ポータル</a>
+      <nav class="nav">
+        <a href="#search">物件を探す</a>
+        <a href="#" id="show-favorites">お気に入り <span id="fav-count" class="badge">0</span></a>
+        <a href="#contact">お問い合わせ</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>理想の新築一戸建てを見つけよう</h1>
+      <p>エリア・価格・間取りから、あなたにぴったりの住まいを検索できます。</p>
+      <form class="hero-search" id="keyword-form">
+        <input type="search" id="keyword" placeholder="駅名・市区町村・物件名で検索">
+        <button type="submit">検索</button>
+      </form>
+    </div>
+  </section>
+
+  <main class="container main" id="search">
+    <aside class="filters" aria-label="絞り込み">
+      <h2>絞り込み</h2>
+      <label>エリア
+        <select id="f-area">
+          <option value="">すべて</option>
+        </select>
+      </label>
+      <label>価格（上限）
+        <select id="f-price">
+          <option value="">上限なし</option>
+          <option value="4500">4,500万円以下</option>
+          <option value="5500">5,500万円以下</option>
+          <option value="7000">7,000万円以下</option>
+          <option value="9000">9,000万円以下</option>
+        </select>
+      </label>
+      <label>間取り
+        <select id="f-layout">
+          <option value="">すべて</option>
+          <option value="3LDK">3LDK以上</option>
+          <option value="4LDK">4LDK以上</option>
+        </select>
+      </label>
+      <label>駅徒歩
+        <select id="f-walk">
+          <option value="">指定なし</option>
+          <option value="10">10分以内</option>
+          <option value="15">15分以内</option>
+        </select>
+      </label>
+      <label>販売状況
+        <select id="f-status">
+          <option value="">すべて</option>
+          <option>販売中</option>
+          <option>予告広告</option>
+          <option>商談中</option>
+        </select>
+      </label>
+      <fieldset>
+        <legend>こだわり条件</legend>
+        <div id="f-features"></div>
+      </fieldset>
+      <button type="button" class="btn-secondary" id="reset">条件をリセット</button>
+    </aside>
+
+    <section class="results">
+      <div class="results-bar">
+        <p><strong id="count">0</strong> 件の物件</p>
+        <label class="sort">並び替え
+          <select id="sort">
+            <option value="new">おすすめ順</option>
+            <option value="price-asc">価格が安い順</option>
+            <option value="price-desc">価格が高い順</option>
+            <option value="walk">駅から近い順</option>
+            <option value="land">土地が広い順</option>
+          </select>
+        </label>
+      </div>
+      <div class="grid" id="grid"></div>
+      <p class="empty" id="empty" hidden>条件に合う物件が見つかりませんでした。条件を変更してください。</p>
+    </section>
+  </main>
+
+  <section class="contact" id="contact">
+    <div class="container">
+      <h2>お問い合わせ・見学予約</h2>
+      <form id="contact-form" class="contact-form">
+        <label>お名前<input name="name" required></label>
+        <label>メールアドレス<input name="email" type="email" required></label>
+        <label>電話番号<input name="tel" type="tel"></label>
+        <label>ご希望の物件
+          <select name="property" id="contact-property">
+            <option value="">指定なし</option>
+          </select>
+        </label>
+        <label class="full">ご質問・ご要望<textarea name="message" rows="4"></textarea></label>
+        <button type="submit">送信する</button>
+        <p class="form-note" id="form-note" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>※掲載物件はすべてサンプルデータです。</p>
+      <p>&copy; 新築住宅ポータル</p>
+    </div>
+  </footer>
+
+  <dialog id="detail" class="detail">
+    <div id="detail-body"></div>
+  </dialog>
+
+  <script src="data/properties.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
