@@ -18,16 +18,17 @@
   --f-display: "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
   --f-body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
   --f-mono: "DM Mono", ui-monospace, "SFMono-Regular", monospace;
+  --logo-filter: none;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #141413; --surface: #1d1d1b; --ink: #ededE8; --muted: #a3a39b; --line: #34342f;
-    --rug: #d9773f; --rug-ink: #141413; --wood: #c09a72; --leaf: #8fb086; color-scheme: dark;
+    --rug: #d9773f; --rug-ink: #141413; --wood: #c09a72; --leaf: #8fb086; --logo-filter: invert(1); color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #141413; --surface: #1d1d1b; --ink: #ededE8; --muted: #a3a39b; --line: #34342f;
-  --rug: #d9773f; --rug-ink: #141413; --wood: #c09a72; --leaf: #8fb086; color-scheme: dark;
+  --rug: #d9773f; --rug-ink: #141413; --wood: #c09a72; --leaf: #8fb086; --logo-filter: invert(1); color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -56,8 +57,9 @@ section + section { border-top: 1px solid var(--line); }
 
 /* header */
 header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 20px; }
-.logo { font-family: var(--f-display); font-weight: 800; font-size: 22px; letter-spacing: .02em; text-decoration: none; }
-.logo span { color: var(--rug); }
+.logo { display: block; line-height: 0; }
+.logo img { display: block; height: 26px; width: auto; filter: var(--logo-filter); }
+.foot-logo { display: block; height: 18px; width: auto; filter: var(--logo-filter); }
 nav { display: flex; gap: 24px; font-size: 14px; }
 nav a { text-decoration: none; color: var(--muted); }
 nav a:hover { color: var(--ink); }
@@ -182,7 +184,7 @@ footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-cont
 
 <header>
   <div class="wrap">
-    <a class="logo" href="#top"><span>＠</span>Interior</a>
+    <a class="logo" href="#top"><img src="logo.png" alt="@Interior" width="667" height="118"></a>
     <nav aria-label="ページ内リンク">
       <a href="#service">サービス</a>
       <a href="#case">コーディネート例</a>
@@ -391,7 +393,7 @@ footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-cont
 
 <footer>
   <div class="wrap">
-    <span>© 2026 ＠Interior</span>
+    <span style="display:flex;align-items:center;gap:12px"><img class="foot-logo" src="logo.png" alt="@Interior" width="667" height="118"> © 2026</span>
     <span>オンラインインテリアコーディネート</span>
   </div>
 </footer>
