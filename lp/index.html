@@ -179,6 +179,21 @@ footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-cont
   .hero-lead { animation-delay: .08s; } .cta-row { animation-delay: .16s; } .plan { animation-delay: .24s; }
   @keyframes rise { from { transform: translateY(12px); opacity: .001; } to { transform: none; opacity: 1; } }
 }
+
+/* image placeholders: 写真が入るまでの枠 */
+.ph { position: relative; display: grid; place-items: center; text-align: center; padding: 12px;
+  background: repeating-linear-gradient(135deg, var(--surface) 0 14px, var(--bg) 14px 28px);
+  border: 1px dashed var(--muted); border-radius: 2px; color: var(--muted);
+  font-size: 13px; line-height: 1.5; aspect-ratio: 4 / 3; max-width: 100%; width: 100%; }
+.ph::before { content: "PHOTO"; position: absolute; top: 10px; left: 12px; font-family: var(--f-mono); font-size: 10px; letter-spacing: .14em; }
+.ph-wide { aspect-ratio: 16 / 7; }
+.ph-tall { aspect-ratio: 3 / 4; }
+.ph-sq { aspect-ratio: 1 / 1; }
+.gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.gallery .ph:first-child { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; min-height: 240px; }
+@media (max-width: 720px) { .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.split { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+@media (max-width: 820px) { .split { grid-template-columns: minmax(0, 1fr); } }
 </style>
 
 <header>
@@ -186,7 +201,7 @@ footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-cont
     <a class="logo" href="#top"><img src="logo.png" alt="@Interior" width="667" height="118"></a>
     <nav aria-label="ページ内リンク">
       <a href="#service">3つの相談</a>
-      <a href="#case">コーディネート例</a>
+      <a href="#gallery">事例</a>
       <a href="#about">About Us</a>
       <a href="#contact">お問い合わせ</a>
     </nav>
@@ -244,6 +259,7 @@ footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-cont
       </div>
       <div class="svc-grid">
         <article class="svc" id="reform">
+          <div class="ph">洗面カウンター・キッチンなどのリフォーム写真</div>
           <p class="svc-key">01 / Petit Reform</p>
           <h3>プチリフォーム相談</h3>
           <p class="svc-for">今のお部屋をリフレッシュしたい方に</p>
@@ -257,6 +273,7 @@ footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-cont
           <a class="btn btn-ghost" href="#contact" data-plan="プチリフォーム相談">この内容で相談する</a>
         </article>
         <article class="svc" id="buy">
+          <div class="ph">コーディネートしたお部屋の写真</div>
           <p class="svc-key">02 / Furniture Support</p>
           <h3>インテリア購入サポート</h3>
           <p class="svc-for">引越しなどで家具をそろえたい方に</p>
@@ -269,16 +286,18 @@ footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-cont
           <a class="btn btn-ghost" href="#contact" data-plan="インテリア購入サポート">この内容で相談する</a>
         </article>
         <article class="svc" id="home">
-          <p class="svc-key">03 / Home Search</p>
-          <h3>お家選び相談</h3>
-          <p class="svc-for">これから住まいを探す方に</p>
+          <div class="ph">住まい・物件のイメージ写真</div>
+          <p class="svc-key">03 / Home Search Concierge</p>
+          <h3>お家探しコンシェルジュ</h3>
+          <p class="svc-for">家を選ぶ前に、家具から考えたい方に</p>
           <ul>
-            <li>暮らし方に合った間取りの考え方</li>
-            <li>インテリアやリフォームの視点での物件チェック</li>
-            <li>住み始めてからのお部屋づくりのご相談</li>
+            <li>理想のお部屋をデザイナーが見える化</li>
+            <li>購入・賃貸・中古リノベの検討</li>
+            <li>住宅販売エキスパート・一級建築士がサポート</li>
+            <li>FP・行政書士など専門家とも連携</li>
           </ul>
           <p class="svc-price">料金：ご相談内容に合わせてお見積りします</p>
-          <a class="btn btn-ghost" href="#contact" data-plan="お家選び相談">この内容で相談する</a>
+          <a class="btn btn-ghost" href="home.html">詳しく見る →</a>
         </article>
       </div>
     </div>
@@ -300,9 +319,27 @@ footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-cont
     </div>
   </section>
 
+  <section id="gallery">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">Gallery</p>
+        <h2>これまでのお部屋づくり</h2>
+        <p>リフォームやコーディネートの事例写真を掲載します。</p>
+      </div>
+      <div class="gallery">
+        <div class="ph">メイン事例写真（大）</div>
+        <div class="ph ph-sq">事例写真</div>
+        <div class="ph ph-sq">事例写真</div>
+        <div class="ph ph-sq">事例写真</div>
+        <div class="ph ph-sq">事例写真</div>
+      </div>
+    </div>
+  </section>
+
   <section id="case">
     <div class="wrap case">
       <div class="case-intro">
+        <div class="ph">このコーディネートのお部屋写真</div>
         <p class="label">Case / インテリア購入サポート</p>
         <h3>グレーのソファに、<br>オレンジのラグを一枚。</h3>
         <p>モノトーンを基本に、木の家具とバーントオレンジのラグで温かみを足したリビングの例です。インテリア購入サポートでは、右のような購入リストをお渡しします。</p>
@@ -343,6 +380,7 @@ footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-cont
       </div>
       <div class="about">
         <div class="profile">
+          <div class="ph ph-tall">Riekoさんのプロフィール写真</div>
           <p class="label">Profile</p>
           <p class="profile-name">Real<small>＠Interior 代表</small></p>
           <p><em class="todo">ここにRealさんの紹介文が入ります</em></p>
@@ -404,7 +442,7 @@ footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-cont
             <option>まだ決めていない</option>
             <option>プチリフォーム相談</option>
             <option>インテリア購入サポート</option>
-            <option>お家選び相談</option>
+            <option>お家探しコンシェルジュ</option>
           </select>
         </div>
         <div class="field"><label for="c-msg">ご相談内容</label><textarea id="c-msg" name="message" placeholder="例：洗面台が古くなってきたので、カウンターを新しくしたいです。"></textarea></div>
@@ -418,7 +456,7 @@ footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-cont
 <footer>
   <div class="wrap">
     <span style="display:flex;align-items:center;gap:12px"><img class="foot-logo" src="logo.png" alt="@Interior" width="667" height="118"> © 2026</span>
-    <span>プチリフォーム・インテリア購入サポート・お家選び相談</span>
+    <span>プチリフォーム・インテリア購入サポート・お家探しコンシェルジュ</span>
   </div>
 </footer>
 
