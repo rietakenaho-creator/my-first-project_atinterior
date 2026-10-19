@@ -147,6 +147,9 @@ footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-cont
 .ph-wide { aspect-ratio: 16 / 7; }
 .ph-tall { aspect-ratio: 3 / 4; }
 .ph-sq { aspect-ratio: 1 / 1; }
+.ph-avatar { width: 128px; aspect-ratio: 1 / 1; border-radius: 50%; font-size: 11px; padding: 18px; }
+.ph-avatar::before { content: none; }
+
 .gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .gallery .ph:first-child { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; min-height: 240px; }
 @media (max-width: 720px) { .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -233,7 +236,7 @@ footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-cont
       <div class="roles">
         <article class="role lead">
           <div style="display:grid;gap:14px">
-            <div class="ph ph-tall" style="max-width:220px">Riekoさんの写真</div>
+            <div class="ph ph-avatar">Riekoさんの写真</div>
             <p class="tag">Designer</p>
             <h3>Rieko &amp; ＠Interior デザイナー</h3>
           </div>
