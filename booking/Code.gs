@@ -20,6 +20,9 @@ const CONFIG = {
   // 公開後に表示される予約ページのURL（.../exec）を入れてください（アンケートURLに使います）
   WEB_APP_URL: '',
 
+  // お客様に案内する予約ページのURL（Instagram・LINEからでも開けるページ）
+  PAGE_URL: 'https://rietakenaho-creator.github.io/my-first-project_atinterior/',
+
   // 相談に使う固定のZoom URL（必ず書き換えてください）
   ZOOM_URL: 'https://zoom.us/j/XXXXXXXXXX?pwd=XXXXXXXX',
   ZOOM_NOTE: '', // 例: 'ミーティングID: 123 456 7890'
@@ -75,7 +78,48 @@ const WEEK = '日月火水木金土';
 /* ============ Webページ ============ */
 
 function doGet(e) {
-  const id = e && e.parameter && e.parameter.id;
+  const p = (e && e.parameter) || {};
+
+  // 予約ページ（PAGE_URL）からの問い合わせ
+  if (p.api) {
+    return api_(function () {
+      if (p.api === 'init') return pageData_(p.id);
+      if (p.api === 'slots') return getAvailableSlots();
+      throw new Error('不正なリクエストです。');
+    });
+  }
+
+  const t = HtmlService.createTemplateFromFile('Index');
+  const data = pageData_(p.id);
+  t.dataJson = JSON.stringify(data).replace(/</g, '\\u003c');
+  return t.evaluate()
+    .setTitle(CONFIG.BRAND + ' ' + CONFIG.TITLE)
+    .addMetaTag('viewport', 'width=device-width, initial-scale=1')
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL); // 自分のサイトに埋め込み可
+}
+
+/** 予約ページ（PAGE_URL）から予約・アンケートを受け取る */
+function doPost(e) {
+  let req = {};
+  try { req = JSON.parse(e.postData.contents); } catch (err) {}
+  return api_(function () {
+    if (req.action === 'book') return bookSlot(req.form);
+    if (req.action === 'survey') return submitSurvey(req.id, req.answers);
+    throw new Error('不正なリクエストです。');
+  });
+}
+
+function api_(fn) {
+  let out;
+  try {
+    out = { ok: true, data: fn() };
+  } catch (err) {
+    out = { ok: false, error: String((err && err.message) || err).replace(/^Error:\s*/, '') };
+  }
+  return ContentService.createTextOutput(JSON.stringify(out)).setMimeType(ContentService.MimeType.JSON);
+}
+
+function pageData_(id) {
   const data = {
     mode: 'book',
     brand: CONFIG.BRAND,
@@ -92,12 +136,7 @@ function doGet(e) {
       data.mode = 'notfound';
     }
   }
-  const t = HtmlService.createTemplateFromFile('Index');
-  t.dataJson = JSON.stringify(data).replace(/</g, '\\u003c');
-  return t.evaluate()
-    .setTitle(CONFIG.BRAND + ' ' + CONFIG.TITLE)
-    .addMetaTag('viewport', 'width=device-width, initial-scale=1')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL); // 自分のサイトに埋め込み可
+  return data;
 }
 
 /* ============ 空き枠の取得 ============ */
@@ -384,7 +423,7 @@ function zoomText_() {
 }
 
 function surveyUrl_(id) {
-  const base = CONFIG.WEB_APP_URL || ScriptApp.getService().getUrl();
+  const base = CONFIG.PAGE_URL || CONFIG.WEB_APP_URL || ScriptApp.getService().getUrl();
   return base + '?id=' + encodeURIComponent(id);
 }
 
