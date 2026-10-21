@@ -21,7 +21,7 @@ const CONFIG = {
   WEB_APP_URL: '',
 
   // お客様に案内する予約ページのURL（Instagram・LINEからでも開けるページ）
-  PAGE_URL: 'https://rawcdn.githack.com/rietakenaho-creator/my-first-project_atinterior/d0d5cdde4ff3c169a3e552b2dcf45471ff5c1b6b/docs/index.html',
+  PAGE_URL: 'https://atinterior.online/yoyaku/',
 
   // 相談に使う固定のZoom URL（必ず書き換えてください）
   ZOOM_URL: 'https://zoom.us/j/XXXXXXXXXX?pwd=XXXXXXXX',
