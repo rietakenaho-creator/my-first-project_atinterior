@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<style>
+  :root { --main:#2563eb; --main-soft:#e8efff; --text:#1f2937; --sub:#6b7280; --line:#e5e7eb; --bg:#f7f8fa; --err:#dc2626; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif; line-height:1.6; }
+  .wrap { max-width:640px; margin:0 auto; padding:24px 16px 48px; }
+  h1 { font-size:22px; margin:0 0 4px; }
+  .lead { color:var(--sub); font-size:14px; margin:0 0 20px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:16px; }
+  h2 { font-size:16px; margin:0 0 12px; display:flex; gap:8px; align-items:center; }
+  h2 .n { background:var(--main); color:#fff; width:22px; height:22px; border-radius:50%; font-size:12px; display:inline-flex; align-items:center; justify-content:center; }
+  .dates { display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; }
+  .chip, .slot { border:1px solid var(--line); background:#fff; border-radius:10px; padding:8px 12px; font-size:14px; cursor:pointer; white-space:nowrap; color:var(--text); }
+  .chip.on, .slot.on { background:var(--main); border-color:var(--main); color:#fff; }
+  .slots { display:grid; grid-template-columns:repeat(auto-fill,minmax(84px,1fr)); gap:8px; margin-top:12px; }
+  label { display:block; font-size:14px; font-weight:600; margin:14px 0 6px; }
+  label .req { color:var(--err); font-size:12px; margin-left:4px; }
+  input, select, textarea { width:100%; font:inherit; font-size:16px; padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:#fff; }
+  textarea { min-height:110px; resize:vertical; }
+  .picked { background:var(--main-soft); border-radius:10px; padding:10px 12px; font-size:14px; margin-bottom:4px; }
+  button.submit { width:100%; margin-top:20px; padding:14px; font-size:16px; font-weight:700; border:0; border-radius:12px; background:var(--main); color:#fff; cursor:pointer; }
+  button.submit:disabled { opacity:.5; cursor:default; }
+  .msg { color:var(--sub); font-size:14px; }
+  .err { color:var(--err); font-size:14px; margin-top:12px; }
+  .done { text-align:center; padding:32px 20px; }
+  .done .big { font-size:40px; }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="form-area">
+    <h1><?= config.title ?></h1>
+    <p class="lead">ご都合のよい日時をお選びください（<?= config.slotMinutes ?>分・Zoom）。</p>
+
+    <div class="card">
+      <h2><span class="n">1</span>日時を選ぶ</h2>
+      <div id="loading" class="msg">空き状況を読み込んでいます…</div>
+      <div id="dates" class="dates"></div>
+      <div id="slots" class="slots"></div>
+    </div>
+
+    <div class="card">
+      <h2><span class="n">2</span>お客様情報</h2>
+      <div id="picked" class="picked hidden"></div>
+
+      <label for="name">お名前<span class="req">必須</span></label>
+      <input id="name" autocomplete="name" placeholder="山田 太郎">
+
+      <label for="email">メールアドレス<span class="req">必須</span></label>
+      <input id="email" type="email" autocomplete="email" placeholder="example@mail.com">
+
+      <label for="topic">ご相談内容<span class="req">必須</span></label>
+      <select id="topic">
+        <option value="">選択してください</option>
+      </select>
+
+      <label for="message">ご希望・詳細（自由記載）<span id="msg-req" class="req hidden">必須</span></label>
+      <textarea id="message" placeholder="ご相談したいこと、ご希望などがあればご記入ください"></textarea>
+
+      <div id="error" class="err hidden"></div>
+      <button id="submit" class="submit" disabled>この内容で予約する</button>
+    </div>
+  </div>
+
+  <div id="done-area" class="card done hidden">
+    <div class="big">✓</div>
+    <h1>ご予約を承りました</h1>
+    <p id="done-when"></p>
+    <p class="msg">確認メールをお送りしました。Zoomのリンクはメールに記載しています。<br>メールが届かない場合は迷惑メールフォルダもご確認ください。</p>
+  </div>
+</div>
+
+<script>
+  const TOPICS = <?!= JSON.stringify(config.topics) ?>;
+  let days = [], selected = null, sending = false;
+  const $ = (id) => document.getElementById(id);
+
+  TOPICS.forEach(t => {
+    const o = document.createElement('option');
+    o.value = t; o.textContent = t;
+    $('topic').appendChild(o);
+  });
+
+  function loadSlots() {
+    $('loading').classList.remove('hidden');
+    $('loading').textContent = '空き状況を読み込んでいます…';
+    $('dates').innerHTML = ''; $('slots').innerHTML = '';
+    google.script.run
+      .withSuccessHandler(d => {
+        days = d;
+        $('loading').classList.add('hidden');
+        if (!days.length) { $('loading').classList.remove('hidden'); $('loading').textContent = '現在ご予約いただける枠がありません。'; return; }
+        renderDates(0);
+      })
+      .withFailureHandler(() => { $('loading').textContent = '読み込みに失敗しました。ページを再読み込みしてください。'; })
+      .getAvailableSlots();
+  }
+
+  function renderDates(active) {
+    $('dates').innerHTML = '';
+    days.forEach((d, i) => {
+      const b = document.createElement('button');
+      b.className = 'chip' + (i === active ? ' on' : '');
+      b.textContent = d.label;
+      b.onclick = () => renderDates(i);
+      $('dates').appendChild(b);
+    });
+    renderSlots(days[active]);
+  }
+
+  function renderSlots(day) {
+    $('slots').innerHTML = '';
+    day.slots.forEach(s => {
+      const b = document.createElement('button');
+      b.className = 'slot' + (selected && selected.start === s.start ? ' on' : '');
+      b.textContent = s.label;
+      b.onclick = () => { selected = { start: s.start, text: day.label + ' ' + s.label + '〜' }; renderSlots(day); update(); };
+      $('slots').appendChild(b);
+    });
+  }
+
+  function update() {
+    if (selected) { $('picked').textContent = '選択中の日時：' + selected.text; $('picked').classList.remove('hidden'); }
+    const other = $('topic').value === 'その他';
+    $('msg-req').classList.toggle('hidden', !other);
+    $('submit').disabled = sending || !selected || !$('name').value.trim() || !$('email').value.trim() || !$('topic').value || (other && !$('message').value.trim());
+  }
+  ['name', 'email', 'topic', 'message'].forEach(id => $(id).addEventListener('input', update));
+
+  $('submit').onclick = () => {
+    sending = true; update();
+    $('submit').textContent = '送信中…';
+    $('error').classList.add('hidden');
+    google.script.run
+      .withSuccessHandler(r => {
+        $('form-area').classList.add('hidden');
+        $('done-area').classList.remove('hidden');
+        $('done-when').textContent = r.when;
+        window.scrollTo(0, 0);
+      })
+      .withFailureHandler(e => {
+        sending = false;
+        $('submit').textContent = 'この内容で予約する';
+        $('error').textContent = (e && e.message) ? e.message.replace(/^Error:\s*/, '') : '送信に失敗しました。';
+        $('error').classList.remove('hidden');
+        if (/埋まって/.test($('error').textContent)) { selected = null; $('picked').classList.add('hidden'); loadSlots(); }
+        update();
+      })
+      .bookSlot({ name: $('name').value, email: $('email').value, topic: $('topic').value, message: $('message').value, start: selected.start });
+  };
+
+  loadSlots();
+</script>
+</body>
+</html>
