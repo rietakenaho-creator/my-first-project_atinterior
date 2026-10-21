@@ -30,7 +30,9 @@ const CONFIG = {
   END_HOUR: 16.5,          // 16:30 まで（16:00〜16:30 の1枠だけ）
   SLOT_MINUTES: 30,        // 1枠の長さ
   BUFFER_MINUTES: 0,       // 予約の前後に空ける時間
-  DAYS_AHEAD: 30,          // 何日先まで予約を受け付けるか
+  OPEN_FROM: '2026-10-26', // 受付期間の初日（空欄 '' なら制限なし）
+  OPEN_UNTIL: '2026-11-30',// 受付期間の最終日（空欄 '' なら制限なし）
+  DAYS_AHEAD: 60,          // 何日先まで予約を受け付けるか
   MIN_NOTICE_HOURS: 3,     // 今から何時間後以降の枠を出すか
   SKIP_JP_HOLIDAYS: true,  // 日本の祝日は受付しない
 
@@ -114,6 +116,7 @@ function getAvailableSlots() {
     const day = new Date(rangeStart.getFullYear(), rangeStart.getMonth(), rangeStart.getDate() + i);
     const key = fmt_(day, 'yyyy-MM-dd');
     if (CONFIG.WEEKDAYS.indexOf(day.getDay()) === -1 || holidays[key]) continue;
+    if ((CONFIG.OPEN_FROM && key < CONFIG.OPEN_FROM) || (CONFIG.OPEN_UNTIL && key > CONFIG.OPEN_UNTIL)) continue;
 
     const slots = [];
     for (let m = CONFIG.START_HOUR * 60; m + CONFIG.SLOT_MINUTES <= CONFIG.END_HOUR * 60; m += CONFIG.SLOT_MINUTES) {
