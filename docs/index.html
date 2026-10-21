@@ -123,7 +123,10 @@
     return res.json().then(r => { if (!r.ok) throw new Error(r.error); return r.data; });
   }
   function apiGet(params) {
-    return fetch(API + '?' + new URLSearchParams(params)).then(unwrap);
+    return withTimeout(fetch(API + '?' + new URLSearchParams(params)).then(unwrap));
+  }
+  function withTimeout(p) {
+    return Promise.race([p, new Promise((_, ng) => setTimeout(() => ng(new Error('timeout')), 30000))]);
   }
   function apiPost(body) {
     return fetch(API, {
@@ -150,11 +153,14 @@
 
   /* ---------- 予約 ---------- */
 
+  let slotsRequest = null; // ページを開いた直後に先に読み込みを始めておく
   function loadSlots() {
     $('loading').classList.remove('hidden');
-    $('loading').textContent = '空き状況を読み込んでいます…';
+    $('loading').textContent = '空き状況を読み込んでいます…（数秒かかることがあります）';
     $('dates').innerHTML = ''; $('slots').innerHTML = '';
-    apiGet({ api: 'slots' })
+    const req = slotsRequest || apiGet({ api: 'slots' });
+    slotsRequest = null;
+    req
       .then(d => {
         days = d;
         if (!days.length) { $('loading').textContent = '現在ご予約いただける枠がありません。'; return; }
@@ -354,6 +360,7 @@
   }
 
   const params = new URLSearchParams(location.search);
+  if (!params.get('id')) slotsRequest = apiGet({ api: 'slots' });
   apiGet(params.get('id') ? { api: 'init', id: params.get('id') } : { api: 'init' })
     .then(d => { DATA = d; start(); })
     .catch(() => { $('boot').textContent = '読み込みに失敗しました。時間をおいてページを再読み込みしてください。'; });

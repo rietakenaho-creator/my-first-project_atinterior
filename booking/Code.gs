@@ -141,35 +141,69 @@ function pageData_(id) {
 
 /* ============ 空き枠の取得 ============ */
 
-function getAvailableSlots() {
+/**
+ * 予約できる枠の一覧。表示を速くするため結果を数分間キャッシュします。
+ * 予約確定時は fresh=true で、必ずカレンダーを読み直して確認します。
+ */
+function getAvailableSlots(fresh) {
+  const cache = CacheService.getScriptCache();
+  if (!fresh) {
+    const hit = cache.get('slots');
+    if (hit) return JSON.parse(hit);
+  }
+
   const now = new Date();
   const earliest = new Date(now.getTime() + CONFIG.MIN_NOTICE_HOURS * 3600 * 1000);
-  const rangeStart = startOfDay_(now);
-  const rangeEnd = new Date(rangeStart.getTime() + (CONFIG.DAYS_AHEAD + 1) * 86400 * 1000);
 
-  const busy = getBusyRanges_(rangeStart, rangeEnd);
-  const holidays = CONFIG.SKIP_JP_HOLIDAYS ? getHolidaySet_(rangeStart, rangeEnd) : {};
+  // 調べる範囲を受付期間に絞る（カレンダーの読み込みを少なくして速くする）
+  let rangeStart = startOfDay_(now);
+  let rangeEnd = new Date(rangeStart.getFullYear(), rangeStart.getMonth(), rangeStart.getDate() + CONFIG.DAYS_AHEAD + 1);
+  if (CONFIG.OPEN_FROM && parseDate_(CONFIG.OPEN_FROM) > rangeStart) rangeStart = parseDate_(CONFIG.OPEN_FROM);
+  if (CONFIG.OPEN_UNTIL) {
+    const last = parseDate_(CONFIG.OPEN_UNTIL);
+    const after = new Date(last.getFullYear(), last.getMonth(), last.getDate() + 1);
+    if (after < rangeEnd) rangeEnd = after;
+  }
 
-  const days = [];
-  for (let i = 0; i <= CONFIG.DAYS_AHEAD; i++) {
-    const day = new Date(rangeStart.getFullYear(), rangeStart.getMonth(), rangeStart.getDate() + i);
-    const key = fmt_(day, 'yyyy-MM-dd');
-    if (CONFIG.WEEKDAYS.indexOf(day.getDay()) === -1 || holidays[key]) continue;
-    if ((CONFIG.OPEN_FROM && key < CONFIG.OPEN_FROM) || (CONFIG.OPEN_UNTIL && key > CONFIG.OPEN_UNTIL)) continue;
-
-    const slots = [];
+  // 候補の枠を先に作る
+  const candidates = [];
+  for (let day = rangeStart; day < rangeEnd; day = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1)) {
+    if (CONFIG.WEEKDAYS.indexOf(day.getDay()) === -1) continue;
     for (let m = CONFIG.START_HOUR * 60; m + CONFIG.SLOT_MINUTES <= CONFIG.END_HOUR * 60; m += CONFIG.SLOT_MINUTES) {
       const start = new Date(day.getFullYear(), day.getMonth(), day.getDate(), 0, m);
-      const end = new Date(start.getTime() + CONFIG.SLOT_MINUTES * 60000);
       if (start < earliest) continue;
-      if (isBusy_(start, end, busy)) continue;
-      slots.push({ start: start.getTime(), label: fmt_(start, 'HH:mm') });
-    }
-    if (slots.length) {
-      days.push({ date: key, label: fmt_(day, 'M/d') + '（' + WEEK[day.getDay()] + '）', slots: slots });
+      candidates.push({ day: day, start: start, end: new Date(start.getTime() + CONFIG.SLOT_MINUTES * 60000) });
     }
   }
+
+  const days = [];
+  if (candidates.length) {
+    const busy = getBusyRanges_(rangeStart, rangeEnd, candidates);
+    const holidays = CONFIG.SKIP_JP_HOLIDAYS ? getHolidaySet_(rangeStart, rangeEnd) : {};
+    const byDate = {};
+    candidates.forEach(function (c) {
+      const key = fmt_(c.day, 'yyyy-MM-dd');
+      if (holidays[key] || isBusy_(c.start, c.end, busy)) return;
+      if (!byDate[key]) {
+        byDate[key] = { date: key, label: fmt_(c.day, 'M/d') + '（' + WEEK[c.day.getDay()] + '）', slots: [] };
+        days.push(byDate[key]);
+      }
+      byDate[key].slots.push({ start: c.start.getTime(), label: fmt_(c.start, 'HH:mm') });
+    });
+  }
+
+  cache.put('slots', JSON.stringify(days), 600); // 10分
   return days;
+}
+
+/** 5分ごとに自動で動く：空き状況を先に読み込んでおき、お客様が開いたときすぐ表示できるようにする */
+function warmSlots() {
+  getAvailableSlots(true);
+}
+
+function parseDate_(s) {
+  const p = String(s).split('-');
+  return new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
 }
 
 /* ============ 予約の確定 ============ */
@@ -192,7 +226,7 @@ function bookSlot(form) {
   lock.waitLock(20000);
   try {
     // 選ばれた枠が本当に今も空いているか再確認
-    const stillOpen = getAvailableSlots().some(function (d) {
+    const stillOpen = getAvailableSlots(true).some(function (d) {
       return d.slots.some(function (s) { return s.start === startMs; });
     });
     if (!stillOpen) throw new Error('申し訳ありません。この時間はすでに埋まってしまいました。別の時間をお選びください。');
@@ -252,6 +286,7 @@ function bookSlot(form) {
       name: CONFIG.SENDER_NAME,
     });
 
+    CacheService.getScriptCache().remove('slots'); // 次に開いた人には最新の空き状況を出す
     return { ok: true, id: id, name: name, when: rec.when };
   } finally {
     lock.releaseLock();
@@ -350,14 +385,17 @@ function sendSurveyReminders() {
 /** エディタから一度実行して、権限の許可・動作確認・毎日のお願いメールの設定をします */
 function setup() {
   getSheet_();
-  const days = getAvailableSlots();
+  const days = getAvailableSlots(true);
   Logger.log('通知先: ' + notifyEmail_());
   Logger.log('予約一覧シート: ' + getSheet_().getParent().getUrl());
   Logger.log('空き枠のある日数: ' + days.length + (days[0] ? '（最初: ' + days[0].label + ' ' + days[0].slots[0].label + '）' : ''));
 
   ScriptApp.getProjectTriggers().forEach(function (t) {
-    if (t.getHandlerFunction() === 'sendSurveyReminders') ScriptApp.deleteTrigger(t);
+    const fn = t.getHandlerFunction();
+    if (fn === 'sendSurveyReminders' || fn === 'warmSlots') ScriptApp.deleteTrigger(t);
   });
+  ScriptApp.newTrigger('warmSlots').timeBased().everyMinutes(5).create();
+  Logger.log('空き状況の先読み: 5分ごとに自動で更新します');
   if (CONFIG.SURVEY_REMINDER) {
     ScriptApp.newTrigger('sendSurveyReminders').timeBased().everyDays(1).atHour(9).create();
     Logger.log('アンケートのお願いメール: 毎日9時台に自動チェックします');
@@ -433,17 +471,18 @@ function getCalendar_() {
     : CalendarApp.getCalendarById(CONFIG.CALENDAR_ID);
 }
 
-function getBusyRanges_(from, to) {
+function getBusyRanges_(from, to, candidates) {
   const buf = CONFIG.BUFFER_MINUTES * 60000;
-  return getCalendar_().getEvents(from, to)
-    .filter(function (e) {
-      if (CONFIG.IGNORE_ALL_DAY_EVENTS && e.isAllDayEvent()) return false;
-      try { if (e.getMyStatus() === CalendarApp.GuestStatus.NO) return false; } catch (err) {}
-      return true;
-    })
-    .map(function (e) {
-      return [e.getStartTime().getTime() - buf, e.getEndTime().getTime() + buf];
-    });
+  const busy = [];
+  getCalendar_().getEvents(from, to).forEach(function (e) {
+    const r = [e.getStartTime().getTime() - buf, e.getEndTime().getTime() + buf];
+    // 受付枠に重ならない予定は、詳しく調べずに飛ばす（速くするため）
+    if (candidates && !candidates.some(function (c) { return isBusy_(c.start, c.end, [r]); })) return;
+    if (CONFIG.IGNORE_ALL_DAY_EVENTS && e.isAllDayEvent()) return;
+    try { if (e.getMyStatus() === CalendarApp.GuestStatus.NO) return; } catch (err) {}
+    busy.push(r);
+  });
+  return busy;
 }
 
 function isBusy_(start, end, busy) {
