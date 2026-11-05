@@ -56,7 +56,7 @@
 
   .photo {
     position: relative;
-    background: url("assets/amanoma_living.jpg") no-repeat;
+    background: url("assets/amanoma_fukinuke.jpg") no-repeat;
     background-size: cover;
     background-position: center 40%;
   }
@@ -159,6 +159,15 @@
   .top .about .lead { font-size: 58px; }
   .bottom .cell { border-top: 5px solid var(--orange); }
   .top .photo::after { background: linear-gradient(0deg, rgba(24,36,58,.9) 0%, rgba(24,36,58,.55) 30%, rgba(24,36,58,0) 58%); }
+  /* 見下ろし写真：ソファとテーブルが中央に来る位置で切り取る */
+  .top .photo { background-position: center 46%; }
+  .top .photo::after { background: linear-gradient(0deg, rgba(24,36,58,.85) 0%, rgba(24,36,58,.4) 24%, rgba(24,36,58,0) 46%); }
+  .photo .photo-cap .brand, .photo .photo-cap .tagline, .photo .photo-cap .sub { text-shadow: 0 2px 12px rgba(0,0,0,.45); }
+  .photo .photo-note { position: absolute; z-index: 3; left: 300px; bottom: 58px; color: #fff; font-size: 32px;
+                       letter-spacing: .14em; text-shadow: 0 2px 10px rgba(0,0,0,.5); }
+  .photo .photo-note::before { content: ""; display: inline-block; width: 46px; height: 2px; background: var(--gold-lt);
+                               vertical-align: middle; margin-right: 18px; }
+  .photo .photo-note { left: 230px; top: 44px; bottom: auto; background: rgba(24,36,58,.78); padding: 16px 30px; font-size: 32px; }
 </style>
 </head>
 <body>
@@ -172,6 +181,7 @@
       <p class="lead">選べるデザイン注文住宅</p>
     </div>
     <div class="photo">
+      <div class="photo-note">2階から見下ろす、吹き抜けのLDK</div>
       <div class="photo-cap mincho"><div class="brand">AMANOMA</div><div class="tagline">空とつながる、天の間。</div><div class="sub"><em>新着</em>古河の家<span>オープンルーム</span></div></div>
       <div class="more">詳しく見る
         <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
