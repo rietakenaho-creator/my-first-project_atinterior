@@ -114,6 +114,20 @@
                              line-height: 1; letter-spacing: .26em; margin-bottom: 18px; }
   .photo .photo-cap .sub { font-size: 50px; }
   .photo .photo-cap .tagline { font-size: 40px; letter-spacing: .2em; color: #E9DDCD; margin: -2px 0 22px 4px; }
+  /* ===== AMANOMA ネイビー×シャンパンゴールド（リッチトーン） ===== */
+  :root { --black: #18243A; --ink: #18243A; --taupe: #2C3D5B; --orange: #B89B62; --gold-lt: #D9C394; --ivory: #F6F2EA; }
+  html, body { background: var(--ivory); }
+  .about { background: var(--ivory); }
+  .photo .more { background: rgba(24,36,58,.92); }
+  .photo .photo-cap { background: rgba(24,36,58,.86); border-left: 6px solid var(--orange); }
+  .photo .photo-cap .tagline { color: #E3D7BE; }
+  .photo .photo-cap span { color: var(--gold-lt); }
+  .photo .photo-cap em { background: var(--orange); color: var(--black); }
+  .works .en { color: var(--gold-lt); }
+  .voice .en { color: #CFC3A8; }
+  .voice .tag { background: var(--ivory); color: var(--black); }
+  .reserve { background: linear-gradient(160deg, #C7AC74 0%, #A88B53 100%); }
+  .reserve .en { color: #18243A; opacity: .8; }
 </style>
 </head>
 <body>
@@ -121,7 +135,7 @@
   <!-- 1. ハウスワークの家（上段全体が1つのボタン） -->
   <section class="top">
     <div class="about">
-      <img class="logo" src="assets/logo.webp" alt="HOUSE WORK 株式会社ハウスワーク">
+      <img class="logo" src="assets/logo_t.png" alt="HOUSE WORK 株式会社ハウスワーク">
       <div class="en about-en">ABOUT US</div>
       <h1 class="mincho">ハウスワークの家</h1>
       <p class="lead">選べるデザイン注文住宅</p>
@@ -153,7 +167,7 @@
 
     <!-- 4. 見学予約 -->
     <div class="cell reserve">
-      <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="#231F1C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="10" width="36" height="32" rx="3"/><path d="M6 19h36M15 6v8M33 6v8"/><path d="M17 30l5 5 9-10"/></svg>
+      <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="#18243A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="10" width="36" height="32" rx="3"/><path d="M6 19h36M15 6v8M33 6v8"/><path d="M17 30l5 5 9-10"/></svg>
       <div class="en">RESERVE</div>
       <h2 class="mincho">見学予約</h2>
       <span class="tag">ご予約はこちら</span>
