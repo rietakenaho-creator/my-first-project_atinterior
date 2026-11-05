@@ -134,6 +134,31 @@
   .photo .photo-cap .tagline { font-size: 36px; margin-bottom: 16px; }
   .photo .photo-cap .sub { font-size: 46px; }
   .photo .more { top: 44px; bottom: auto; font-size: 46px; padding: 20px 40px 20px 48px; }
+  /* ===== 写真を上段いっぱいに（文字はグラデーション越しに重ねる） ===== */
+  .top { position: relative; display: block; overflow: hidden; }
+  .top .photo { position: absolute; inset: 0; z-index: 1;
+                background-size: cover; background-position: center 32%; }
+  .top .photo::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(0deg, rgba(24,36,58,.78) 0%, rgba(24,36,58,0) 42%); }
+  .top .about { position: absolute; left: 0; top: 0; bottom: 0; width: 1300px; z-index: 2;
+    background: linear-gradient(90deg, rgba(24,36,58,.94) 0%, rgba(24,36,58,.82) 55%, rgba(24,36,58,0) 100%); }
+  .top .about .logo { height: auto; width: 250px; background: var(--ivory); padding: 16px 24px; border-radius: 4px; }
+  .top .about h1 { color: #FFFFFF; }
+  .top .about .lead { color: #EDE4D3; }
+  .top .about .about-en { color: var(--gold-lt); }
+  .photo .photo-cap { left: auto; right: 64px; bottom: 54px; z-index: 3; background: none;
+                      border-left: 4px solid var(--orange); padding: 6px 0 6px 40px; }
+  .photo .photo-cap .brand { text-shadow: 0 4px 18px rgba(0,0,0,.35); }
+  .photo .more { z-index: 3; top: 40px; right: 0; }
+  /* 写真は右 1640px に収め、高窓〜ソファまで見せる */
+  .top { background: #18243A; }
+  .top .photo { left: 860px; background-position: center 45%; }
+  .top .about { width: 1180px;
+    background: linear-gradient(90deg, #18243A 0%, #18243A 70%, rgba(24,36,58,.6) 84%, rgba(24,36,58,0) 100%); }
+  .top .about h1 { font-size: 110px; }
+  .top .about .lead { font-size: 58px; }
+  .bottom .cell { border-top: 5px solid var(--orange); }
+  .top .photo::after { background: linear-gradient(0deg, rgba(24,36,58,.9) 0%, rgba(24,36,58,.55) 30%, rgba(24,36,58,0) 58%); }
 </style>
 </head>
 <body>
