@@ -56,9 +56,9 @@
 
   .photo {
     position: relative;
-    background: url("assets/hero.jpg") no-repeat;
-    background-size: 2500px auto;
-    background-position: 0 -225px;
+    background: url("assets/amanoma_living.jpg") no-repeat;
+    background-size: cover;
+    background-position: center 40%;
   }
   .photo .more {
     position: absolute; right: 0; bottom: 70px;
@@ -128,6 +128,12 @@
   .voice .tag { background: var(--ivory); color: var(--black); }
   .reserve { background: linear-gradient(160deg, #C7AC74 0%, #A88B53 100%); }
   .reserve .en { color: #18243A; opacity: .8; }
+  /* 吹き抜けの高窓を見せるため、帯は下・「詳しく見る」は右上へ */
+  .photo .photo-cap { top: auto; bottom: 0; padding: 26px 50px 30px 56px; }
+  .photo .photo-cap .brand { font-size: 100px; margin-bottom: 12px; }
+  .photo .photo-cap .tagline { font-size: 36px; margin-bottom: 16px; }
+  .photo .photo-cap .sub { font-size: 46px; }
+  .photo .more { top: 44px; bottom: auto; font-size: 46px; padding: 20px 40px 20px 48px; }
 </style>
 </head>
 <body>
